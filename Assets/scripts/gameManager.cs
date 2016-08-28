@@ -3,19 +3,38 @@ using System.Collections;
 
 public class gameManager : MonoBehaviour {
 
-	public static gameManager m = null;
-
-	private bool blueKeyObtained = false;
-	public bool BlueKeyObtained {
-		get {return blueKeyObtained;}
-		set {blueKeyObtained = value;}
+	// /// //// Key Status //// /// //
+	private int keyLevelObtained = 0;
+	public int KeyLevelObtained {
+		get {return keyLevelObtained;}
+		set {keyLevelObtained = value;}
 	}
 
+
+	// /// //// General Functions //// /// //
+	private bool paused = false;
+	public bool Paused {
+		get {return paused;}
+		set {paused = value;}
+	}
+
+	// /// //// Enemy States //// /// //
 	private bool playerSeenBySecurityCam = false;
 	public bool PlayerSeenBySecurityCam {
 		get {return playerSeenBySecurityCam;}
 		set {playerSeenBySecurityCam = value;}
 	}
+
+	private bool playerSeenByRobot = false;
+	public bool PlayerSeenByRobot {
+		get {return playerSeenByRobot;}
+		set {playerSeenByRobot = value;} 
+	}
+
+
+
+
+	public static gameManager m = null;
 
 	void Awake() {
 		if (m == null) {
@@ -24,6 +43,5 @@ public class gameManager : MonoBehaviour {
 			Destroy(gameObject);
 		}
 		DontDestroyOnLoad(gameObject);
-
 	}
 }

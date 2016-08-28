@@ -17,7 +17,6 @@ public class SecurityCameraLook : MonoBehaviour {
 	private float t;
 	private float startTime;
 	private bool reverse;
-	private SphereCollider trigger;
 	private bool cameraRotation;
 	private bool rotateIsRunning;
 	private IEnumerator rotate;
@@ -25,7 +24,6 @@ public class SecurityCameraLook : MonoBehaviour {
 	void Start() {
 		reverse = false;
 		rotate = Rotate();
-		trigger = GetComponent<SphereCollider>();
 		cameraRotation = true;
 		rotateIsRunning = false;
 		StartCoroutine(rotate);

@@ -5,26 +5,28 @@ public class robotPathing : MonoBehaviour {
 
 	public GameObject[] nodes;
 	public GameObject player;
-	public float totalTime = 2f;
+	public float pathTravelTime = 2f;
 	public float fov = 90f;
+
+	private float movementSpeed = 2f;
+	private bool targeting;
+	private Transform target;
 
 	private int nodeIndex;
 	private float startTime;
 	private bool pathingTime;
 	private SphereCollider trigger;
-	private bool playerFound;
 
 	Vector3 startPos;
 
 	void Start () {
 		nodeIndex = 0;
 		pathingTime = true;
-		playerFound = false;
 		trigger = GetComponent<SphereCollider>();
 		startPos = transform.position;
 	}
 	
-	void Update () {
+	void FixedUpdate () {
 
 		if (pathingTime) {
 			Pathing();
@@ -32,28 +34,26 @@ public class robotPathing : MonoBehaviour {
 			Searching();
 		}
 
-
+		Movement();
 	}
 
 	void Searching() {
-		startPos = transform.position;
-		float timeSinceStart = Time.time - startTime;
-		float t = timeSinceStart / totalTime;
 
-		transform.position = Vector3.Lerp(startPos, player.transform.position, t);
 	}
 
-	void OnTriggerStay(Collider target) {
-		if (target.gameObject.tag == "Player") {
-			Vector3 direction = target.transform.position - transform.position;
+	void OnTriggerStay(Collider colliderTarget) {
+		if (colliderTarget.gameObject.tag == "Player") {
+			targeting = true;
+			target = colliderTarget.GetComponent<Transform>();
+			Vector3 direction = colliderTarget.transform.position - transform.position;
 			float angle = Vector3.Angle(direction, transform.forward);
 			if (angle < fov * 0.5f) {
 				RaycastHit hit;
 
 				if (Physics.Raycast(transform.position + transform.up, direction.normalized, out hit, trigger.radius)) {
 					if (hit.collider.gameObject.tag == "Player") {
-						print("cool");
-						playerFound = true;
+						gameManager.m.PlayerSeenByRobot = true;
+						movementSpeed = 3f;
 						pathingTime = false;
 					}
 
@@ -62,25 +62,33 @@ public class robotPathing : MonoBehaviour {
 		}
 	}
 
+	void OnTriggerExit() {
+		gameManager.m.PlayerSeenByRobot = false;
+		pathingTime = true;
+	}
+ 
 	void Pathing() {
-		float timeSinceStart = Time.time - startTime;
-		float t = timeSinceStart / totalTime;
+		target = nodes[nodeIndex].transform;
+		targeting = true;
 
-		transform.position = Vector3.Lerp(startPos, nodes[nodeIndex].transform.position, t);
-
-		if (Vector3.Distance(transform.position, nodes[nodeIndex].transform.position) < 0.05 && t > 0.99) {
+		if (Vector3.Distance(transform.position, nodes[nodeIndex].transform.position) < 0.5) {
 			nodeIndex++;
-			startPos = transform.position;
-			startTime = Time.time;
-			
-			t = 0;
 		}
-
-		transform.position = new Vector3 (transform.position.x, 2, transform.position.z);
 
 		if (nodeIndex > 4) {
 			nodeIndex = 0;
 		}
 		
+	}
+
+	void Movement() {
+		transform.Translate(movementSpeed * Vector3.forward * Time.deltaTime);
+		if (targeting) {
+			Vector3 relativePos = target.position - transform.position;
+      Quaternion targetRotation = Quaternion.LookRotation(relativePos);
+      transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 2f);
+		} else {
+
+		}
 	}
 }

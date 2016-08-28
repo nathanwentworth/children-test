@@ -45,17 +45,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\scripts\CameraAvoid.cs" />
      <Compile Include="Assets\scripts\CameraNoise.cs" />
      <Compile Include="Assets\scripts\MouseLook.cs" />
      <Compile Include="Assets\scripts\PlayerActions.cs" />
      <Compile Include="Assets\scripts\PlayerMovement.cs" />
      <Compile Include="Assets\scripts\SecurityCameraLook.cs" />
      <Compile Include="Assets\scripts\SmoothFollow.cs" />
-     <Compile Include="Assets\scripts\cursorLock.cs" />
      <Compile Include="Assets\scripts\gameManager.cs" />
+     <Compile Include="Assets\scripts\pauseFunctions.cs" />
      <Compile Include="Assets\scripts\robotPathing.cs" />
-     <Compile Include="Assets\scripts\smoothRotate.cs" />
      <None Include="Assets\Standard Assets\Effects\GlassRefraction\Shaders\GlassStainedBumpDistort.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\BlendOneOne.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\NoiseEffectShaderRGB.shader" />

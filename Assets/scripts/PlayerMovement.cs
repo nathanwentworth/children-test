@@ -6,13 +6,13 @@ public class PlayerMovement : MonoBehaviour {
 	public Transform player;
 	public Transform cam;
 	public Rigidbody rb;
+	public GameObject pausePanel;
 
-	private float speed = 4f;
-	public float rotationSpeed = 50f;
-	public float jumpStrength = 5f;
-
-	public float mouseSensitivity = 100.0f;
-	public float clampAngle = 80.0f;
+	public float moveSpeed = 4f,
+	rotationSpeed = 50f,
+	jumpStrength = 5f,
+	mouseSensitivity = 100.0f,
+	clampAngle = 80.0f;
 
 	private float rotY = 0.0f;
 	private float rotX = 0.0f;
@@ -22,11 +22,17 @@ public class PlayerMovement : MonoBehaviour {
 	yRotation,
 	xRotation;
 
-	private Vector3 dir;
-	private Vector3 forward;
-	private Vector3 right;
+	private bool
+	grounded,
+	allowPlayerMovement;
+
+	private Vector3
+	dir,
+	forward,
+	right;
+
 	private Quaternion rotation;
-	private bool grounded;
+
 
 	void Start() {
 		rb = GetComponent<Rigidbody>();
@@ -36,6 +42,7 @@ public class PlayerMovement : MonoBehaviour {
 		dir = Vector3.zero;
 		forward = cam.TransformDirection(Vector3.forward);
 		forward.y = 0f;
+		Lock(true);
 	}
 	
 	void FixedUpdate() {
@@ -47,9 +54,9 @@ public class PlayerMovement : MonoBehaviour {
 		}
 
 		if (grounded) {
-			speed = 4;
+			moveSpeed = 4;
 		} else {
-			speed = 3;
+			moveSpeed = 3;
 		}
 
 		forward = forward.normalized;
@@ -60,6 +67,7 @@ public class PlayerMovement : MonoBehaviour {
     float v = Input.GetAxis("Vertical");
     bool crouch = Input.GetButton("Crouch");
     bool jump = Input.GetButton("Jump");
+    bool pause = Input.GetButton("Cancel");
 
     dir.x = h;
     dir.z = v;
@@ -78,17 +86,52 @@ public class PlayerMovement : MonoBehaviour {
 		Quaternion localRotation = Quaternion.Euler(0.0f, rotY, 0.0f);
 		transform.rotation = localRotation;
 
-    Movement(h, v, crouch, jump);
+    Inputs(h, v, crouch, jump);
+    if (!gameManager.m.Paused) {
+    	allowPlayerMovement = true;
+    }
+    if (pause) {
+  	  Lock(false);
+    	Pause();
+  	}
+		if (Input.GetButton("Click")) {
+			if (!gameManager.m.Paused) {
+				Lock(true);				
+			}
+		}
 	}
 
-	void Movement(float h, float v, bool crouch, bool jump) {
-		player.transform.Translate(v * forward * speed * Time.deltaTime);
-		player.transform.Translate(h * right * speed * 0.75f * Time.deltaTime);
-		if (grounded && jump) {
-			rb.AddForce(transform.up * jumpStrength);
+	void Inputs(float h, float v, bool crouch, bool jump) {
+		if (allowPlayerMovement) {
+			player.transform.Translate(v * forward * moveSpeed * Time.deltaTime);
+			player.transform.Translate(h * right * moveSpeed * 0.75f * Time.deltaTime);
+			if (grounded && jump) {
+				rb.AddForce(transform.up * jumpStrength);
+			}
+			if (h > 0) {
+				player.transform.Rotate(-h * Vector3.up * rotationSpeed * Time.deltaTime);
+			}
 		}
-		if (h > 0) {
-			player.transform.Rotate(-h * Vector3.up * rotationSpeed * Time.deltaTime);
+	}
+
+	void Lock (bool lockState) {
+		if (lockState) Cursor.lockState = CursorLockMode.Locked;
+		else Cursor.lockState = CursorLockMode.None;
+		Cursor.visible = !lockState;
+	}
+
+
+	void Pause() {
+		if (!gameManager.m.Paused) {
+			pausePanel.GetComponent<CanvasGroup>().alpha = 1;
+			pausePanel.GetComponent<CanvasGroup>().interactable = true;
+			Time.timeScale = 0;
+			gameManager.m.Paused = true;
+		} else {
+			pausePanel.GetComponent<CanvasGroup>().alpha = 0;
+			pausePanel.GetComponent<CanvasGroup>().interactable = false;
+			Time.timeScale = 1;
+			gameManager.m.Paused = false;
 		}
 	}
 }
