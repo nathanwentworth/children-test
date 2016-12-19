@@ -8,28 +8,28 @@ public class SecurityCameraLook : MonoBehaviour {
 	[SerializeField]
 	private float waitTime = 2f;
 
-	public GameObject camStatusLight;
+	[SerializeField]
+	private GameObject camStatusLight;
 
-	private Quaternion startRot = Quaternion.Euler(35, 45, 0);
-	private Quaternion endRot = Quaternion.Euler(35, -45, 0);
+	private readonly Quaternion startRot = Quaternion.Euler(35, 45, 0);
+	private readonly Quaternion endRot = Quaternion.Euler(35, -45, 0);
 	private Quaternion currRot;
 
-	private float t;
 	private float startTime;
 	private bool reverse;
 	private bool cameraRotation;
 	private bool rotateIsRunning;
 	private IEnumerator rotate;
 
-	void Start() {
+	private void Start() {
 		reverse = false;
-		rotate = Rotate();
 		cameraRotation = true;
 		rotateIsRunning = false;
+		rotate = Rotate();
 		StartCoroutine(rotate);
 	}
 
-	void OnTriggerStay(Collider target) {
+	private void OnTriggerStay(Collider target) {
 		if (target.gameObject.tag == "Player") {
 			Vector3 direction = target.transform.position - transform.position;
 			float angle = Vector3.Angle(direction, transform.forward);
@@ -51,7 +51,7 @@ public class SecurityCameraLook : MonoBehaviour {
 		}
 	}
 
-	void OnTriggerExit(Collider target) {
+	private void OnTriggerExit(Collider target) {
 		cameraRotation = true;
 		rotateIsRunning = false;
 		if (target.gameObject.tag == "Player") {
@@ -62,10 +62,9 @@ public class SecurityCameraLook : MonoBehaviour {
 		}
 	}
 
-	IEnumerator Rotate() {
+	private IEnumerator Rotate() {
 		rotateIsRunning = true;
-		t = 0;
-		startTime = 0;
+		float t = 0;
 		startTime = Time.time;
 		currRot = transform.localRotation;
 
@@ -81,11 +80,8 @@ public class SecurityCameraLook : MonoBehaviour {
 			yield return null;	
 		}
 
-		if (reverse) {
-			reverse = false;
-		} else {
-			reverse = true;
-		}
+		reverse = !reverse;
+
 		yield return new WaitForSeconds(waitTime);
 		rotateIsRunning = false;
 		StartCoroutine(Rotate());

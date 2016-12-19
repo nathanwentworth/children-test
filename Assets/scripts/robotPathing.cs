@@ -56,7 +56,6 @@ public class robotPathing : MonoBehaviour {
 						movementSpeed = 3f;
 						pathingTime = false;
 					}
-
 				}
 			}
 		}

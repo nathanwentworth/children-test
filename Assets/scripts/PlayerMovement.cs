@@ -1,12 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
+using InControl;
 
 public class PlayerMovement : MonoBehaviour {
 
 	public Transform player;
 	public Transform cam;
-	public Rigidbody rb;
 	public GameObject pausePanel;
+
+	private Rigidbody rb;
+	private Controls controls;
+
+	public int InverseLook { get; set; }
 
 	public float moveSpeed = 4f,
 	rotationSpeed = 50f,
@@ -17,7 +22,6 @@ public class PlayerMovement : MonoBehaviour {
 	private float rotY = 0.0f;
 	private float rotX = 0.0f;
  
-
 	private float
 	yRotation,
 	xRotation;
@@ -33,8 +37,12 @@ public class PlayerMovement : MonoBehaviour {
 
 	private Quaternion rotation;
 
+	private void OnEnable() {
+		controls = Controls.DefaultBindings();
+	}
 
 	void Start() {
+		InverseLook = -1;
 		rb = GetComponent<Rigidbody>();
 		Vector3 rot = transform.localRotation.eulerAngles;
 		rotY = rot.y;
@@ -45,7 +53,7 @@ public class PlayerMovement : MonoBehaviour {
 		Lock(true);
 	}
 	
-	void FixedUpdate() {
+	private void FixedUpdate() {
 
 		if (Physics.Raycast(transform.position, Vector3.down, 1.1f)) {
 			grounded = true;
@@ -63,20 +71,18 @@ public class PlayerMovement : MonoBehaviour {
 		right = new Vector3(forward.z, 0.0f, -forward.x);
 
 
-		float h = Input.GetAxis("Horizontal");
-    float v = Input.GetAxis("Vertical");
+		dir = controls.Move;
+		dir.z = dir.y;
+
     bool crouch = Input.GetButton("Crouch");
-    bool jump = Input.GetButton("Jump");
-    bool pause = Input.GetButton("Cancel");
+    bool jump = controls.Jump.IsPressed;
+    bool interact = controls.Interact.IsPressed;
+    bool pause = controls.Pause.IsPressed;
 
-    dir.x = h;
-    dir.z = v;
-
-    dir = cam.transform.TransformDirection(dir);
     dir.y = 0.0f;
 
-    float mouseX = Input.GetAxis("Mouse X");
-		float mouseY = -Input.GetAxis("Mouse Y");
+    float mouseX = controls.Look;
+		float mouseY = InverseLook * Input.GetAxis("Mouse Y");
 
 		rotY += mouseX * mouseSensitivity * Time.deltaTime;
 		rotX += mouseY * mouseSensitivity * Time.deltaTime;
@@ -86,7 +92,8 @@ public class PlayerMovement : MonoBehaviour {
 		Quaternion localRotation = Quaternion.Euler(0.0f, rotY, 0.0f);
 		transform.rotation = localRotation;
 
-    Inputs(h, v, crouch, jump);
+    Inputs(dir.normalized, crouch, jump, interact);
+
     if (!gameManager.m.Paused) {
     	allowPlayerMovement = true;
     }
@@ -101,15 +108,15 @@ public class PlayerMovement : MonoBehaviour {
 		}
 	}
 
-	void Inputs(float h, float v, bool crouch, bool jump) {
+	void Inputs(Vector3 dir, bool crouch, bool jump, bool interact) {
 		if (allowPlayerMovement) {
-			player.transform.Translate(v * forward * moveSpeed * Time.deltaTime);
-			player.transform.Translate(h * right * moveSpeed * 0.75f * Time.deltaTime);
+			player.transform.Translate(dir * moveSpeed * Time.deltaTime, cam.transform);
+			// player.transform.Translate(dir.x * moveSpeed * 0.75f * Time.deltaTime, Camera.main.transform);
 			if (grounded && jump) {
 				rb.AddForce(transform.up * jumpStrength);
 			}
-			if (h > 0) {
-				player.transform.Rotate(-h * Vector3.up * rotationSpeed * Time.deltaTime);
+			if (dir.x > 0) {
+				player.transform.Rotate(-dir.z * Vector3.up * rotationSpeed * Time.deltaTime);
 			}
 		}
 	}

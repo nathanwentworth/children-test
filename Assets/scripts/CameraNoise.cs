@@ -2,17 +2,35 @@
 using System.Collections;
 
 public class CameraNoise : MonoBehaviour {
+	[SerializeField]
+  private Transform obj;
+  [SerializeField]
+  private float noiseStrength = 5f;
+  [SerializeField]
+  private float shakeSpeed = 0.01f;
+  private float x1, y1, x2, y2;
 
-	public Transform cam;
-	private float x1, y1, x2, y2;
-	public float noiseStrength = 5;
+  private void Start() {
+    x1 = y1 = 0f;
+    x2 = y2 = 0.5f;
+  }
 
-	void Start () {
-		x1 = y1 = x2 = y2 = 0f;
-	}
-	
-	void FixedUpdate () {
-		if (!cam) return;
-		cam.transform.localPosition = new Vector3(Mathf.PerlinNoise(x1 += .01f, y1 += .01f) * Time.deltaTime * noiseStrength, Mathf.PerlinNoise(x2 += .01f, y2 += .01f) * Time.deltaTime * noiseStrength, 0);
-	}
+  private void FixedUpdate() {
+    if (!obj) return;
+    obj.transform.localPosition = new Vector3((Mathf.PerlinNoise(x1 += shakeSpeed, y1 += shakeSpeed) - 0.5f) * Time.deltaTime * noiseStrength, -(Mathf.PerlinNoise(x2 -= shakeSpeed, y2 -= shakeSpeed) - 0.5f) * Time.deltaTime * noiseStrength, 0);
+  }
+
+  public IEnumerator ScreenShake(float speed, float strength) {
+    noiseStrength = 5f;
+    shakeSpeed = 0.01f;
+    float t = 0f;
+    while (t < 1f) {
+      t += Time.deltaTime;
+      shakeSpeed = Mathf.SmoothStep(speed, 0.01f, t);
+      noiseStrength = Mathf.SmoothStep(strength, 5f, t);
+      yield return null;
+    }
+    yield return null;
+  }
+
 }

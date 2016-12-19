@@ -16,17 +16,17 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 4000010030554920}
-  - 20: {fileID: 20000010299449208}
-  - 124: {fileID: 124000014039687828}
-  - 92: {fileID: 92000013675736080}
-  - 81: {fileID: 81000011670934292}
-  - 114: {fileID: 114000012782041588}
-  - 114: {fileID: 114000012841883488}
-  - 54: {fileID: 54000012448828610}
-  - 135: {fileID: 135000011543488906}
+  - component: {fileID: 4000010030554920}
+  - component: {fileID: 20000010299449208}
+  - component: {fileID: 124000014039687828}
+  - component: {fileID: 92000013675736080}
+  - component: {fileID: 81000011670934292}
+  - component: {fileID: 114000012782041588}
+  - component: {fileID: 114000012841883488}
+  - component: {fileID: 54000012448828610}
+  - component: {fileID: 135000011543488906}
   m_Layer: 0
   m_Name: cam
   m_TagString: Untagged
@@ -39,10 +39,10 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 4000013110503630}
-  - 114: {fileID: 114000014015649574}
+  - component: {fileID: 4000013110503630}
+  - component: {fileID: 114000014015649574}
   m_Layer: 0
   m_Name: cam-noise
   m_TagString: Untagged
@@ -55,10 +55,10 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 4000012279718922}
-  - 114: {fileID: 114000013248297028}
+  - component: {fileID: 4000012279718922}
+  - component: {fileID: 114000013248297028}
   m_Layer: 0
   m_Name: smooth-follow
   m_TagString: Untagged
@@ -75,10 +75,10 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 4000013110503630}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4000012279718922
 Transform:
   m_ObjectHideFlags: 1
@@ -88,11 +88,11 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 4000013110503630}
   m_Father: {fileID: 0}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4000013110503630
 Transform:
   m_ObjectHideFlags: 1
@@ -102,11 +102,11 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.26, y: 1.67, z: -2.55}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 4000010030554920}
   m_Father: {fileID: 4000012279718922}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!20 &20000010299449208
 Camera:
   m_ObjectHideFlags: 1
@@ -241,8 +241,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7852277ef6e0d4933811ee79e9216d39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cam: {fileID: 4000010030554920}
+  obj: {fileID: 4000010030554920}
   noiseStrength: 5
+  shakeSpeed: 0.01
 --- !u!124 &124000014039687828
 Behaviour:
   m_ObjectHideFlags: 1

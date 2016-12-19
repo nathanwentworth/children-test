@@ -131,23 +131,17 @@
 			"file": "Assets/scripts/SecurityCameraLook.cs",
 			"settings":
 			{
-				"buffer_size": 2298,
+				"buffer_size": 2290,
+				"encoding": "UTF-8 with BOM",
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "Assets/scripts/PlayerActions.cs",
+			"file": "Assets/scripts/robotPathing.cs",
 			"settings":
 			{
-				"buffer_size": 1188,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/Users/nathan/Documents/git/sabotage-rally/.gitignore",
-			"settings":
-			{
-				"buffer_size": 372,
+				"buffer_size": 2051,
+				"encoding": "UTF-8 with BOM",
 				"line_ending": "Unix"
 			}
 		},
@@ -156,6 +150,16 @@
 			"settings":
 			{
 				"buffer_size": 948,
+				"encoding": "UTF-8 with BOM",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Assets/scripts/CameraNoise.cs",
+			"settings":
+			{
+				"buffer_size": 995,
+				"encoding": "UTF-8 with BOM",
 				"line_ending": "Unix"
 			}
 		}
@@ -213,9 +217,14 @@
 	},
 	"expanded_folders":
 	[
+		"/Users/nathan/Documents/git/children-test",
+		"/Users/nathan/Documents/git/children-test/Assets",
+		"/Users/nathan/Documents/git/children-test/Assets/scripts"
 	],
 	"file_history":
 	[
+		"/Users/nathan/Documents/git/children-test/Assets/scripts/PlayerActions.cs",
+		"/Users/nathan/Documents/git/sabotage-rally/.gitignore",
 		"/Users/nathan/Documents/git/children-test/.git/config",
 		"/Users/nathan/Documents/git/children-test/.gitignore",
 		"/Users/nathan/Documents/git/children-test/Assets/scripts/keyDoorActions.cs",
@@ -353,7 +362,7 @@
 	"groups":
 	[
 		{
-			"selected": 2,
+			"selected": 3,
 			"sheets":
 			[
 				{
@@ -362,15 +371,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2298,
+						"buffer_size": 2290,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								447,
-								447
+								1686,
+								1686
 							]
 						],
 						"settings":
@@ -382,27 +391,27 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 1002.0,
+						"translation.y": 680.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 3,
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "Assets/scripts/PlayerActions.cs",
+					"file": "Assets/scripts/robotPathing.cs",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1188,
+						"buffer_size": 2051,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								813,
-								813
+								2051,
+								2051
 							]
 						],
 						"settings":
@@ -410,11 +419,11 @@
 							"incomplete_sync": null,
 							"remote_loading": false,
 							"synced": false,
-							"syntax": "Packages/C#/C#.sublime-syntax",
+							"syntax": "Packages/Unity3D/UnityC#.tmLanguage",
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 916.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 1,
@@ -422,35 +431,6 @@
 				},
 				{
 					"buffer": 2,
-					"file": "/Users/nathan/Documents/git/sabotage-rally/.gitignore",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 372,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"incomplete_sync": null,
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
 					"file": "Assets/scripts/gameManager.cs",
 					"semi_transient": false,
 					"settings":
@@ -462,8 +442,8 @@
 						"selection":
 						[
 							[
-								762,
-								762
+								768,
+								768
 							]
 						],
 						"settings":
@@ -475,10 +455,42 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
+						"translation.y": 57.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "Assets/scripts/CameraNoise.cs",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 995,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								131,
+								131
+							]
+						],
+						"settings":
+						{
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/Unity3D/UnityC#.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 0,
 					"type": "text"
 				}
 			]
@@ -542,9 +554,13 @@
 	"select_project":
 	{
 		"height": 500.0,
-		"last_filter": "connor",
+		"last_filter": "rg",
 		"selected_items":
 		[
+			[
+				"rg",
+				"~/Documents/git/rpg/rpg.sublime-project"
+			],
 			[
 				"connor",
 				"~/Documents/www/connorbotts/connorbotts.sublime-project"

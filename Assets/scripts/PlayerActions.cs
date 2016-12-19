@@ -3,34 +3,35 @@ using System.Collections;
 
 public class PlayerActions : MonoBehaviour {
 
-	void OnTriggerEnter(Collider other) {
+	private void OnTriggerEnter(Collider other) {
 		string tag = other.gameObject.tag;
 
-		if (tag.StartsWith("Key") || tag.StartsWith("Door")) {
-			string tagNum = tag.Substring(tag.Length - 1);
-			int tagNumVal = int.Parse(tagNum);
-
-			if (tag.StartsWith("Key")) {
-				if (tagNumVal > gameManager.m.KeyLevelObtained) {
-					print ("Obtained a higher access level keycard, can now access level " + tagNumVal + " doors.");
-					gameManager.m.KeyLevelObtained = tagNumVal;
-				} else if (tagNumVal == gameManager.m.KeyLevelObtained) {
-					print ("You already have this level of keycard.");
+		if (tag == "Key" || tag == "Door") {
+			if (other.gameObject.GetComponent<LockAndKeyManager>() != null) {
+        LockAndKeyManager val = other.gameObject.GetComponent<LockAndKeyManager>();
+				if (val.key) {
+          // is a key
+					if (val.accessLevel > gameManager.m.KeyLevelObtained) {
+						print ("Obtained a higher access level keycard, can now access level " + val.accessLevel + " doors.");
+						gameManager.m.KeyLevelObtained = val.accessLevel;
+					} else if (val.accessLevel == gameManager.m.KeyLevelObtained) {
+						print ("You already have this level of keycard.");
+					} else {
+						print ("This keycard is of a lower access level than what you currently have.");
+					}
+          other.gameObject.SetActive(false);
 				} else {
-					print ("This keycard is of a lower access level than what you currently have.");
-				}
-				other.gameObject.SetActive(false);
+          // is a door
+          if (val.accessLevel <= gameManager.m.KeyLevelObtained) {
+            print ("Opened level " + val.accessLevel + " door.");
+            other.gameObject.GetComponent<Animator>().SetTrigger("OpenDoor");
+            // other.gameObject.SetActive(false);
+          } else {
+            print ("Door cannot be opened, this requires level " + val.accessLevel + " access.\nYou only have level " + gameManager.m.KeyLevelObtained + " access.");
+          }
+        }
 			}
-
-			if (tag.StartsWith("Door")) {
-				if (tagNumVal <= gameManager.m.KeyLevelObtained) {
-					print ("Opened level " + tagNumVal + " door.");
-					other.gameObject.SetActive(false);
-				} else {
-					print ("Door cannot be opened, this requires level " + tagNumVal + " access.\nYou only have level " + gameManager.m.KeyLevelObtained + " access.");
-				}
-			}
-		}
+    }
 	}
 
 }
