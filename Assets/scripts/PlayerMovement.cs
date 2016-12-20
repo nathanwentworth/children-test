@@ -30,10 +30,7 @@ public class PlayerMovement : MonoBehaviour {
 	grounded,
 	allowPlayerMovement;
 
-	private Vector3
-	dir,
-	forward,
-	right;
+	private Vector3 dir;
 
 	private Quaternion rotation;
 
@@ -48,8 +45,6 @@ public class PlayerMovement : MonoBehaviour {
 		rotY = rot.y;
 		rotX = rot.x;
 		dir = Vector3.zero;
-		forward = cam.TransformDirection(Vector3.forward);
-		forward.y = 0f;
 		Lock(true);
 	}
 	
@@ -67,19 +62,17 @@ public class PlayerMovement : MonoBehaviour {
 			moveSpeed = 3;
 		}
 
-		forward = forward.normalized;
-		right = new Vector3(forward.z, 0.0f, -forward.x);
-
-
 		dir = controls.Move;
 		dir.z = dir.y;
+    dir.y = 0.0f;
+
+    print (dir);
 
     bool crouch = Input.GetButton("Crouch");
     bool jump = controls.Jump.IsPressed;
     bool interact = controls.Interact.IsPressed;
     bool pause = controls.Pause.IsPressed;
 
-    dir.y = 0.0f;
 
     float mouseX = controls.Look;
 		float mouseY = InverseLook * Input.GetAxis("Mouse Y");
