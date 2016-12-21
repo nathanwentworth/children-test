@@ -101,7 +101,7 @@ public class PlayerMovement : MonoBehaviour {
 		}
 	}
 
-	void Inputs(Vector3 dir, bool crouch, bool jump, bool interact) {
+	private void Inputs(Vector3 dir, bool crouch, bool jump, bool interact) {
 		if (allowPlayerMovement) {
 			player.transform.Translate(dir * moveSpeed * Time.deltaTime, cam.transform);
 			// player.transform.Translate(dir.x * moveSpeed * 0.75f * Time.deltaTime, Camera.main.transform);
@@ -114,7 +114,7 @@ public class PlayerMovement : MonoBehaviour {
 		}
 	}
 
-	void Lock (bool lockState) {
+	private void Lock (bool lockState) {
 		if (lockState) Cursor.lockState = CursorLockMode.Locked;
 		else Cursor.lockState = CursorLockMode.None;
 		Cursor.visible = !lockState;
